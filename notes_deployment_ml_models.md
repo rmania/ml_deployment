@@ -90,6 +90,11 @@ Reads on Building Reproducible Pipelines:
  - https://www.trainindata.com/post/building-and-deploying-reproducible-machine-learning-pipelines
  - https://arxiv.org/ftp/arxiv/papers/1810/1810.04570.pdf
  - https://petewarden.com/2018/03/19/the-machine-learning-reproducibility-crisis/
+  - scaling ML_as_a_service: http://proceedings.mlr.press/v67/li17a/li17a.pdf
+  - https://engineering.fb.com/ml-applications/introducing-fblearner-flow-facebook-s-ai-backbone/
+  
+ 
+ MLaaS - UITWERKEN !!!!
  
 Again reproducacility in ML is hard because most machine learning methods rely on some sort of pseudorandomness for things like:
  - Weight initialization
@@ -110,3 +115,11 @@ https://medium.com/netflix-techblog/system-architectures-for-personalization-and
 Google’s TFX Paper: https://ai.google/research/pubs/pub46484
 Uber’s (very complex!) Michelangelo System: https://eng.uber.com/michelangelo/
 Testing Machine Learning Systems: https://ai.google/research/pubs/pub45742
+
+### ML Pipeline: writing Production code
+
+ - Procedurial Prgramming --> procedures, also known as routines, subroutines or functions, are carried out as a series of computational steps. (yaml, config, .py scripts etc instead of code in notebooks and lab envs)
+ - Object Oriented Programming - OOP. we write code in the form of “objects”. This “objects” can store data, and can also store instructions or procedures to modify that data.
+ - Pipelines --> set of data processing steps connected in series, where typically, the
+output of one element is the input of the next one.
+ - Skearn API (Predictors, Transformers, Pipeline)
