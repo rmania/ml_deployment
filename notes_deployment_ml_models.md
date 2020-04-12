@@ -118,8 +118,28 @@ Testing Machine Learning Systems: https://ai.google/research/pubs/pub45742
 
 ### ML Pipeline: writing Production code
 
- - Procedurial Prgramming --> procedures, also known as routines, subroutines or functions, are carried out as a series of computational steps. (yaml, config, .py scripts etc instead of code in notebooks and lab envs)
+ - Procedurial Programming --> procedures, also known as routines, subroutines or functions, are carried out as a series of computational steps. (yaml, config, .py scripts etc instead of code in notebooks and lab envs)
  - Object Oriented Programming - OOP. we write code in the form of “objects”. This “objects” can store data, and can also store instructions or procedures to modify that data.
  - Pipelines --> set of data processing steps connected in series, where typically, the
 output of one element is the input of the next one.
- - Skearn API (Predictors, Transformers, Pipeline)
+ - Skearn API (Predictors, Transformers, Pipeline) leverages power of acknowledged api's
+ 
+ Some useful modules:
+  - https://github.com/solegalli/feature_engine and https://feature-engine.readthedocs.io/en/latest/
+  
+  Resources to Improve as a Python Developer
+   - https://gist.github.com/sloria/7001839
+    - https://realpython.com/tutorials/best-practices/
+  learn IDE (integrated development environments) like pycharm:
+   - https://www.tutorialspoint.com/pycharm/index.htm
+   - https://www.fullstackpython.com/pycharm.html
+   
+ (A few) Software Engineering Good Practices:
+  - Version control
+  - Test: Unit, Integration, acceptance ...
+  - Trunk based development and peer reviews
+  - understand system dependencies
+  - CI/CI pipelines
+  - Python --> Style (PEP 8), Type Hint, Literal String Interpolation (f"{}") Forcing Key Word Arguments (kwargs)   
+  
+  - **pytest** is the defacto standard. Killer feature here is : https://docs.pytest.org/en/latest/fixture.html#fixture They provide a fixed baseline so that tests execute reliably and produce consistent, repeatable, results.
