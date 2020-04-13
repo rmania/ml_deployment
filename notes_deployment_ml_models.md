@@ -141,5 +141,35 @@ output of one element is the input of the next one.
   - understand system dependencies
   - CI/CI pipelines
   - Python --> Style (PEP 8), Type Hint, Literal String Interpolation (f"{}") Forcing Key Word Arguments (kwargs)   
-  
+   
   - **pytest** is the defacto standard. Killer feature here is : https://docs.pytest.org/en/latest/fixture.html#fixture They provide a fixed baseline so that tests execute reliably and produce consistent, repeatable, results.
+  - **tox** aims to automate and standardize testing in Python. https://tox.readthedocs.io/en/latest/
+  
+  - package your model for reproducability with effective use of versioning (including data)
+  - clearly organize preprocessing and feature engineering steps
+  - persist your predictions (logs or databases)
+  - abstract model details in congif
+  - validate your data
+  
+### model serving via an REST API
+  
+An **API** is an application programming interface. It is a set of rules that allow programs to talk to each other. The developer creates the API on the server and allows the client to talk to it.
+**REST** determines how the API looks like. It stands for Representational State Transfer”. It is a set of rules that developers follow when they create their API. 
+
+https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/
+
+a Praised Python Flask tutorial : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+
+ - Make your api a thin layer (minimizes the chance of having code logic for your models spread across 2 different applications which increases the chances of forgetting to update one)
+ -  validate inputs carefully (consider using a schema -python marshmallow module: https://marshmallow.readthedocs.io/en/stable/quickstart.html#declaring-schemas) 
+ - log all key inputs and errors for reproducability and debugging
+ - test the api
+ 
+### CI CD
+ 
+ Testing and deploying our applications according to the CI/CD method means:
+ - The system in an “always releasable” state
+ - Faster, regular release cycles
+ - Building and testing is automated
+ - Delivery and deployments are automated (at least to some extent)
+ - Visibility across the company (and audit log)
