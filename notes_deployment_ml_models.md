@@ -173,3 +173,12 @@ a Praised Python Flask tutorial : https://blog.miguelgrinberg.com/post/the-flask
  - Building and testing is automated
  - Delivery and deployments are automated (at least to some extent)
  - Visibility across the company (and audit log)
+
+### Differential tests
+
+A type of test that compares the differences in execution from one system version to the next when the inputs are the same.
+ - Sometimes called “back-to-back” testing
+ - Very useful for detecting machine learning system errors that do not raise exceptions.
+ - Tuning them is a balancing act (depends on business requirements).
+ - Can prevent very painful mistakes that are not detected for long periods of time
+
