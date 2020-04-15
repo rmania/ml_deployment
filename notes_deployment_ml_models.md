@@ -180,5 +180,93 @@ A type of test that compares the differences in execution from one system versio
  - Sometimes called “back-to-back” testing
  - Very useful for detecting machine learning system errors that do not raise exceptions.
  - Tuning them is a balancing act (depends on business requirements).
- - Can prevent very painful mistakes that are not detected for long periods of time
+ - Can prevent very painful mistakes that are not detected for long periods of time.
+ 
+ good practice to put a `differential_tests` folder with 
 
+### Docker
+
+create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and deploy it as one package. 
+installation on Ubuntu: https://docs.docker.com/engine/install/ubuntu/
+
+### AWS ECS
+
+Amazon Elastic Container Service (Amazon ECS) is a highly scalable, fast, container management service that makes it easy to run, stop, and manage Docker containers on a cluster.
+Two main launch types: Fargate and EC2. 
+
+Course stipulates: task definition so Amazon ECS knows which Docker image to use for containers, how many containers to use in the task, and the resource allocation for each container. 
+
+Containerization has transformed how we deploy software
+ - options: Kubernetes, ECS, Docker Swarm
+ - Kubernetes is the container orchestration engine of choice......But has the most complex setup and management
+ - Self-Managed (Kubernetes) vs. Fully managed service (ECS)
+ - Kubernetes is a good choice in many scenarios (but not all)
+ - New Player: Amazon Elastic Container Service for Kubernetes (EKS) = managed Kubernetes
+ 
+ Steps in course: 
+ 
+  - make an AWS account
+  - set up IAM
+  	- create a new group (collection of permissions) 
+  	- attach permissions (AmazonEC@ContainerServiceFullAccess +  AmazonEC@ContainerRegisttryFullAccess + IAMReadOnlyAccess)
+  - add user (ecs-admin) --> programmatic access
+  - permissions for user (we attach a group we just created)
+  - (skip add key)
+  - create user (get he access key id and the secret access key that is only shown here and one should store in a fault)
+  
+  - install AWS CLI (https://docs.amazonaws.cn/en_us/cli/latest/userguide/install-linux.html
+  - AW CLI config steps
+  	- `aws configure` --> AWS access key and the secret key 
+  	- `aws iam list-users` for overview
+  - ECR --> get started, create name for repo, get the URI that we need
+  - via AWS CLI we can the Docker Images and put them in ECR --> build locally and push to ECR.
+  	- go to project root
+  	- activate venv
+  	- get the ENV VARIABLES ready to use (test with echo %NAME_ENV_VARIABLE)
+  	- `docker build --build-arg
+PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL} -t
+YOUR_APP_NAME:latest .`
+	- `docker tag YOUR_APP_NAME:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-
+east-1.amazonaws.com/YOUR_APP_NAME:latest`
+	- before we can push we need to login to the ECR: `aws ecr get-login --no-include-email --region us-east-1` 
+	- this will spit out the DOCKER LOGIN. Copy and paste :
+	- `docker login -u AWS -p DOCKER LOGIN
+	- `docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-
+1.amazonaws.com/YOUR_APP_NAME:latest`
+	- check on AWS ECR if image URI and tag have been successfully created
+	
+**creating ECS cluster with FARGATE method**
+	- go to ECR service, copy latest IMAGE URI
+	- go to ECS --> clusters --> get started --> click on "custom container definition" 
+	- in image paste the  IMAGE URI, port-mapping: 5000, advanced settings: environment variables: PIP_EXTRA_INDEX_URL (the Gemfury url) . create , define your service: no load balancer, give it the cluster name (ml-api-cluster f.i.)
+	- after creation go to view service: task (tab) you will see "pending" will take some minutes. Wait until finished
+	- got task tab and copy the public IP. past in browser with port 5000/ health you should see ok
+	
+**updating cluster containers**
+ 
+ - f.i. update the API VERSION number
+ - build the updated Docker Image locally, tagged it and pushed it to the AWS registry where the updated IMAGE URI should be available.
+ - udpate the ECS task in `aws ecs update-service --cluster YOUR_CLUSTER_NAME --service
+YOUR_SERVICE_NAME --task-definition YOUR_TASK_DEFINITION --
+force-new-deployment`
+ - check if successful: on AWS ECS cluster -- task tab where we should see an additional task being provisioned. When complete there should be a new Network Public IP address (in details). To get a consistent IP adress or a range of IP addresses we need to use Load Blancer.
+ -  check new public IP adress and endpoint to see that the new image is being used. 
+ 
+**tear down ECS cluster**
+`https://docs.aws.amazon.com/AmazonECS/latest/developerguide/delete_cluster.htm
+
+**adding deployment to ECS to the CI_CD pipeline**
+ - add new job (commands) to the `circle/congif.yml` 
+ - add new ENV VARIABLES to circle CI: AWS ACCESS KEY, AWS ACCOUNT ID, AWS_DEFAULT_REGION, AWS_SECRET_ACESS_KEY
+ - change MAKEFILE : new commands: build-ml-api-aws with the docker steps build, push and tag 
+	
+
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
