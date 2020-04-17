@@ -259,7 +259,28 @@ force-new-deployment`
  - add new job (commands) to the `circle/congif.yml` 
  - add new ENV VARIABLES to circle CI: AWS ACCESS KEY, AWS ACCOUNT ID, AWS_DEFAULT_REGION, AWS_SECRET_ACESS_KEY
  - change MAKEFILE : new commands: build-ml-api-aws with the docker steps build, push and tag 
-	
+ 
+ 
+### Deploying a CNN classifier
+
+Some notes how to deal with setting seeds in NN's. Randomness get in the way in multiple fashions:
+ - Random initialization of layer weights: the weights of the different layers are intialised
+randomly
+ - Shuffling of datasets: The dataset is randomly shuffled for example if we leave 10% of
+the samples for cross-validation within model.fit
+ - Noisy hidden layers: Dropout layers, which exclude the contribution of a particular neuron, are initialised randomly.
+ - Changes in ML frameworks: Different versions of ML libraries can lead different behavior.
+ - Non-deterministic GPU floating point calculations: If using GPUs, certain functions in cuDNN, the Nvidia Deep Neural Network library for GPUs, are stochastic, which means that they are initialised randomly at each run. 
+- CPU multi-threading: CPU parallelization when using Tensorflow 
+
+Some answers: 
+https://stackoverflow.com/questions/32419510/how-to-get-reproducible-results-in-keras
+https://github.com/keras-team/keras/issues/439
+https://github.com/keras-team/keras/issues/2479
+https://machinelearningmastery.com/reproducible-results-neural-networks-keras/
+
+Blogpost: Reproducibility in ML: why it matters and how to achieve it: https://determined.ai/blog/reproducibility-in-ml/ from the company : https://determined.ai/
+
 
   
   
